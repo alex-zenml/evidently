@@ -7,28 +7,17 @@
 from __future__ import print_function
 
 import os
-from glob import glob
 from os.path import join as pjoin
 
 from setuptools import setup
 
 from setupbase import (
-    create_cmdclass, ensure_targets,
-    find_packages, combine_commands, ensure_python,
-    get_version, HERE, install_npm
+    create_cmdclass, ensure_targets, combine_commands, HERE, install_npm
 )
 
-# The name of the project
-NAME = 'evidently'
-
-# Ensure a valid python version
-ensure_python('3.6')
-
 # Get our version
-version = get_version(pjoin(NAME, '_version.py'))
 
-nb_path = pjoin(HERE, NAME, 'nbextension', 'static')
-lab_path = pjoin(HERE, NAME, 'labextension')
+nb_path = pjoin(HERE, 'src', 'evidently', 'nbextension', 'static')
 
 # Representative files that should exist after a successful build
 jstargets = [
@@ -37,17 +26,15 @@ jstargets = [
 ]
 
 package_data_spec = {
-    NAME: [
+    'evidently': [
         'nbextension/static/*.*js*',
         'nbextension/static/*.woff2',
-        'labextension/*.tgz'
     ]
 }
 
 data_files_spec = [
-    ('share/jupyter/nbextensions/evidently',
-     nb_path, '*.js*'),
-    ('share/jupyter/lab/extensions', lab_path, '*.tgz'),
+    ('share/jupyter/nbextensions/evidently', nb_path, '*.js*'),
+    ('share/jupyter/nbextensions/evidently', nb_path, '*.woff2'),
     ('etc/jupyter/nbconfig/notebook.d', HERE, 'evidently.json')
 ]
 
@@ -63,17 +50,7 @@ with open("requirements.txt", encoding="utf-8") as dep_file:
 with open("dev_requirements.txt", encoding="utf-8") as dev_dep_file:
     dev_dependencies = dev_dep_file.readlines()
 setup_args = dict(
-    name=NAME,
-    description='Open-source tools to analyze, monitor, and debug machine learning model in production.',
-    version=version,
-    scripts=glob(pjoin('scripts', '*')),
     cmdclass=cmdclass,
-    packages=find_packages(),
-    author='Emeli Dral',
-    author_email='emeli.dral@gmail.com',
-    url='https://github.com/evidentlyai/evidently',
-    license='Apache License 2.0',
-    platforms="Linux, Mac OS X, Windows",
     keywords=[],
     classifiers=[],
     include_package_data=True,

@@ -14,7 +14,6 @@ from os.path import join as pjoin
 import io
 import os
 import functools
-from packaging import version
 import pipes
 import re
 import shlex
@@ -76,42 +75,6 @@ else:
 # ---------------------------------------------------------------------------
 # Public Functions
 # ---------------------------------------------------------------------------
-
-def get_version(file, name='__version__'):
-    """Get the version of the package from the given file by
-    executing it and extracting the given `name`.
-    """
-    path = os.path.realpath(file)
-    version_ns = {}
-    with io.open(path, encoding="utf8") as f:
-        exec(f.read(), {}, version_ns)
-    return version_ns[name]
-
-
-def ensure_python(min_version):
-    """Given a list of range specifiers for python, ensure compatibility.
-    """
-    v = sys.version_info
-    part = '%s.%s' % (v.major, v.minor)
-    version.parse(min_version)
-    if version.parse(part) < version.parse(min_version):
-        raise ValueError('Python version %s unsupported' % part)
-
-
-def find_packages(top=HERE):
-    """
-    Find all of the packages.
-    """
-    packages = []
-    for d, dirs, _ in os.walk(top, followlinks=True):
-        if os.path.exists(pjoin(d, '__init__.py')):
-            packages.append(os.path.relpath(d, top).replace(os.path.sep, '.'))
-        elif d != top:
-            # Do not look for packages in subfolders if current is not a package
-            dirs[:] = []
-    return packages
-
-
 def update_package_data(distribution):
     """update build_py options to get package_data changes"""
     build_py = distribution.get_command_obj('build_py')
