@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt && pip install -r dev_requirements.txt
       - name: Run Flake8
-        run: flake8 evidently
+        run: flake8 src/evidently
       - name: Run Mypy
         run: mypy
   test:
@@ -41,8 +41,10 @@ jobs:
         with:
           python-version: '3.6'
           architecture: 'x64'
+      - name: Update pip
+        run: pip install --upgrade pip
       - name: Install dependencies
-        run: pip install -r requirements.txt && pip install -r dev_requirements.txt && pip install --upgrade pygments
+        run: pip install --upgrade pygments
       - name: Prepare env
         run: pip install -e .
       - name: Run Tests
