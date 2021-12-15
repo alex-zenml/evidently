@@ -23,15 +23,11 @@ class DataDriftMonitor(ModelMonitor):
                   analyzers_results: Dict[Type[Analyzer], Any]):
         pass
 
-    def __init__(self):
-        super().__init__()
-        self.analyzers_types = [DataDriftAnalyzer]
-
     def monitor_id(self) -> str:
         return "data_drift"
 
     def analyzers(self):
-        return self.analyzers_types
+        return [DataDriftAnalyzer]
 
     def metrics(self, analyzer_results):
         data_drift_results = analyzer_results[DataDriftAnalyzer]

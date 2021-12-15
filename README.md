@@ -128,7 +128,7 @@ HTML report does not open automatically. To explore it, you should open it from 
 
 To generate the **Regression Model Performance** report, run:
 ```python
-regression_model_performance = Dashboard(tabs=[RegressionPerfomanceTab()]) 
+regression_model_performance = Dashboard(tabs=[RegressionPerformanceTab()]) 
 regression_model_performance.calculate(reference_data, current_data, column_mapping = column_mapping) 
 ```
 
@@ -218,6 +218,9 @@ or
 prob_classification_single_model_performance = Profile(sections=[ProbClassificationPerformanceProfileSection()])
 prob_classification_single_model_performance.calculate(reference_data, None, column_mapping=column_mapping)
 ```
+
+### Community Reports
+
 
 ### Google Colab, Kaggle Kernel, Deepnote
 You can run ```evidently``` in [Google Colab](https://colab.research.google.com/), [Kaggle Notebook](https://www.kaggle.com/code) and [Deepnote](https://deepnote.com/).
