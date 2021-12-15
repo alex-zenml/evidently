@@ -1,18 +1,20 @@
 import itertools
-from typing import List, Dict, Type, Sequence
+from typing import List, Dict, Type, Sequence, TYPE_CHECKING
 
 import pandas
 
-from evidently.analyzers.base_analyzer import Analyzer
-from evidently.options import OptionsProvider
 from evidently.pipeline.column_mapping import ColumnMapping
 from evidently.pipeline.stage import PipelineStage
+from evidently.options import OptionsProvider
+
+if TYPE_CHECKING:
+    from evidently.analyzers import Analyzer
 
 
 class Pipeline:
-    _analyzers: List[Type[Analyzer]]
+    _analyzers: List[Type['Analyzer']]
     stages: Sequence[PipelineStage]
-    analyzers_results: Dict[Type[Analyzer], object]
+    analyzers_results: Dict[Type['Analyzer'], object]
     options_provider: OptionsProvider
 
     def __init__(self, stages: Sequence[PipelineStage], options: list):
@@ -23,7 +25,7 @@ class Pipeline:
         for option in options:
             self.options_provider.add(option)
 
-    def get_analyzers(self) -> List[Type[Analyzer]]:
+    def get_analyzers(self) -> List[Type['Analyzer']]:
         return self._analyzers
 
     def execute(self,
